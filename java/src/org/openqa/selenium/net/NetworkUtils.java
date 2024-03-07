@@ -16,6 +16,7 @@
 // under the License.
 package org.openqa.selenium.net;
 
+import io.github.pixee.security.SystemCommand;
 import static org.openqa.selenium.net.NetworkInterface.isIpv6;
 
 import java.io.BufferedReader;
@@ -262,7 +263,7 @@ public class NetworkUtils {
     }
     if (host == null && Platform.getCurrent().is(Platform.MAC)) {
       try {
-        Process process = Runtime.getRuntime().exec("hostname");
+        Process process = SystemCommand.runCommand(Runtime.getRuntime(), "hostname");
 
         if (!process.waitFor(2, TimeUnit.SECONDS)) {
           process.destroyForcibly();

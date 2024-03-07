@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.net;
 
+import io.github.pixee.security.SystemCommand;
 import static java.util.logging.Level.WARNING;
 
 import java.io.BufferedReader;
@@ -45,7 +46,7 @@ public class HostIdentifier {
     }
     if (host == null && Platform.getCurrent().is(Platform.MAC)) {
       try {
-        Process process = Runtime.getRuntime().exec("hostname");
+        Process process = SystemCommand.runCommand(Runtime.getRuntime(), "hostname");
 
         if (!process.waitFor(2, TimeUnit.SECONDS)) {
           process.destroyForcibly();
