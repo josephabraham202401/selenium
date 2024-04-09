@@ -22,6 +22,7 @@ import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.internal.DefaultConsole;
 import com.google.auto.service.AutoService;
 import com.google.common.io.Resources;
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -133,7 +134,7 @@ public class InfoCommand implements CliCommand {
     try (BufferedReader reader = new BufferedReader(new StringReader(unformattedText))) {
       boolean inCode = false;
 
-      for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+      for (String line = BoundedLineReader.readLine(reader, 5_000_000); line != null; line = BoundedLineReader.readLine(reader, 5_000_000)) {
         if (line.isEmpty()) {
           if (inCode) {
             formattedText.append("\n");
