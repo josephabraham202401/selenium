@@ -362,7 +362,7 @@ public class Script implements Closeable {
     Map<String, Object> params = new HashMap<>();
     params.put("functionDeclaration", functionDeclaration);
     params.put("awaitPromise", awaitPromise);
-    if (targetType.equals("contextTarget")) {
+    if ("contextTarget".equals(targetType)) {
       if (sandbox != null) {
         params.put("target", Map.of("context", id, "sandbox", sandbox));
       } else {
@@ -391,7 +391,7 @@ public class Script implements Closeable {
     Map<String, Object> params = new HashMap<>();
     params.put("expression", expression);
     params.put("awaitPromise", awaitPromise);
-    if (targetType.equals("contextTarget")) {
+    if ("contextTarget".equals(targetType)) {
       if (sandbox != null) {
         params.put("target", Map.of("context", id, "sandbox", sandbox));
       } else {

@@ -307,7 +307,7 @@ public class DockerSessionFactory implements SessionFactory {
     seEnvVars.entrySet().stream()
         .filter(
             entry ->
-                entry.getKey().startsWith("SE_") || entry.getKey().equalsIgnoreCase("LANGUAGE"))
+                entry.getKey().startsWith("SE_") || "LANGUAGE".equalsIgnoreCase(entry.getKey()))
         .forEach(entry -> envVars.put(entry.getKey(), entry.getValue()));
     return envVars;
   }

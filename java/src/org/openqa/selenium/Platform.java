@@ -420,11 +420,11 @@ public enum Platform {
       return Platform.ANDROID;
     }
     // Windows 8 can't be detected by osName alone
-    if (osVersion.equals("6.2") && osName.startsWith("windows nt")) {
+    if ("6.2".equals(osVersion) && osName.startsWith("windows nt")) {
       return WIN8;
     }
     // Windows 8 can't be detected by osName alone
-    if (osVersion.equals("6.3") && osName.startsWith("windows nt")) {
+    if ("6.3".equals(osVersion) && osName.startsWith("windows nt")) {
       return WIN8_1;
     }
     Platform mostLikely = UNIX;

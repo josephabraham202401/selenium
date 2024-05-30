@@ -76,7 +76,7 @@ public class LogLevelMapping {
       return Level.INFO;
     }
 
-    if (logLevelName.equals(DEBUG)) {
+    if (DEBUG.equals(logLevelName)) {
       return Level.FINE;
     }
     return levelMap.get(Level.parse(logLevelName).intValue());

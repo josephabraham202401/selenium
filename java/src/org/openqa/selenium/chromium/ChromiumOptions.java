@@ -282,11 +282,11 @@ public class ChromiumOptions<T extends ChromiumOptions<?>>
     Require.nonNull("Capabilities to merge", capabilities);
 
     for (String name : capabilities.getCapabilityNames()) {
-      if (!name.equals("binary") && !name.equals("extensions") && !name.equals("args")) {
+      if (!"binary".equals(name) && !"extensions".equals(name) && !"args".equals(name)) {
         setCapability(name, capabilities.getCapability(name));
       }
 
-      if (name.equals("args") && capabilities.getCapability(name) != null) {
+      if ("args".equals(name) && capabilities.getCapability(name) != null) {
         List<String> arguments = (List<String>) (capabilities.getCapability(("args")));
         arguments.forEach(
             arg -> {
@@ -296,7 +296,7 @@ public class ChromiumOptions<T extends ChromiumOptions<?>>
             });
       }
 
-      if (name.equals("extensions") && capabilities.getCapability(name) != null) {
+      if ("extensions".equals(name) && capabilities.getCapability(name) != null) {
         List<Object> extensionList = (List<Object>) (capabilities.getCapability(("extensions")));
         extensionList.forEach(
             extension -> {
@@ -310,7 +310,7 @@ public class ChromiumOptions<T extends ChromiumOptions<?>>
             });
       }
 
-      if (name.equals("binary") && capabilities.getCapability(name) != null) {
+      if ("binary".equals(name) && capabilities.getCapability(name) != null) {
         Object binary = capabilities.getCapability("binary");
         if (binary instanceof String) {
           setBinary((String) binary);

@@ -38,7 +38,7 @@ public class FormEncodedData {
     try {
       String contentType = request.getHeader("Content-Type");
       if (contentType == null
-          || !contentType.split(";")[0].trim().equals("application/x-www-form-urlencoded")) {
+          || !"application/x-www-form-urlencoded".equals(contentType.split(";")[0].trim())) {
         return Optional.empty();
       }
     } catch (IllegalArgumentException | NullPointerException e) {

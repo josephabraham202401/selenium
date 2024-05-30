@@ -723,7 +723,7 @@ public class RemoteWebDriver
     if ((commandName.equals(DriverCommand.SCREENSHOT)
             || commandName.equals(DriverCommand.ELEMENT_SCREENSHOT)
             || commandName.equals(DriverCommand.PRINT_PAGE)
-            || commandName.equals("fullPageScreenshot"))
+            || "fullPageScreenshot".equals(commandName))
         && toLog instanceof Response) {
       Response responseToLog = (Response) toLog;
       Response copyToLog = new Response(new SessionId((responseToLog).getSessionId()));

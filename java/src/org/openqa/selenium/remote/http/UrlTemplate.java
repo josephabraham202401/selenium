@@ -147,7 +147,7 @@ public class UrlTemplate {
     if (matchAgainst == null || prefix == null) {
       return null;
     }
-    if (!prefix.isEmpty() && !prefix.equals("/")) {
+    if (!prefix.isEmpty() && !"/".equals(prefix)) {
       matchAgainst = matchAgainst.replaceFirst(prefix, "");
     }
     return match(matchAgainst);

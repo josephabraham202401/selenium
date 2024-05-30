@@ -809,7 +809,7 @@ public class CdpClientGenerator {
 
     @Override
     public String getTypeToken() {
-      if (type.equals("object")) {
+      if ("object".equals(type)) {
         return "java.util.Map.class";
       } else {
         return getJavaType() + ".class";
@@ -860,7 +860,7 @@ public class CdpClientGenerator {
     public TypeDeclaration<?> toTypeDeclaration() {
       ClassOrInterfaceDeclaration classDecl = new ClassOrInterfaceDeclaration().setName(name);
 
-      if (type.equals("object")) {
+      if ("object".equals(type)) {
         classDecl.addExtendedType("java.util.AbstractMap<String, Object>");
       }
 
@@ -876,7 +876,7 @@ public class CdpClientGenerator {
                   "this.%s = java.util.Objects.requireNonNull(%s, \"Missing value for %s\");",
                   propertyName, propertyName, name));
 
-      if (type.equals("object")) {
+      if ("object".equals(type)) {
         // we only need to implement entrySet and put to have a working map
         MethodDeclaration entrySet = classDecl.addMethod("entrySet").setPublic(true);
         entrySet.setType("java.util.Set<java.util.Map.Entry<String, Object>>");
@@ -913,13 +913,13 @@ public class CdpClientGenerator {
       fromJson.getBody().get().addStatement(String.format("return new %s(%s);", name, getMapper()));
 
       MethodDeclaration toJson = classDecl.addMethod("toJson").setPublic(true);
-      if (type.equals("object")) {
+      if ("object".equals(type)) {
         toJson.setType("java.util.Map<String, Object>");
         toJson.getBody().get().addStatement(String.format("return %s;", propertyName));
-      } else if (type.equals("number")) {
+      } else if ("number".equals(type)) {
         toJson.setType(Number.class);
         toJson.getBody().get().addStatement(String.format("return %s;", propertyName));
-      } else if (type.equals("integer")) {
+      } else if ("integer".equals(type)) {
         toJson.setType(Integer.class);
         toJson.getBody().get().addStatement(String.format("return %s;", propertyName));
       } else {

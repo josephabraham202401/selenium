@@ -118,7 +118,7 @@ public class SessionCapabilitiesMutator implements Function<Capabilities, Capabi
     for (Map.Entry<String, Object> entry : capsOptions.entrySet()) {
       String name = entry.getKey();
       Object value = entry.getValue();
-      if (name.equals("args")) {
+      if ("args".equals(name)) {
         @SuppressWarnings("unchecked")
         List<String> arguments = new ArrayList<>((List<String>) value);
 
@@ -136,7 +136,7 @@ public class SessionCapabilitiesMutator implements Function<Capabilities, Capabi
         toReturn.put("args", stereotypeArguments);
       }
 
-      if (name.equals("extensions")) {
+      if ("extensions".equals(name)) {
         @SuppressWarnings("unchecked")
         List<String> extensionList = new ArrayList<>((List<String>) value);
 
@@ -155,11 +155,11 @@ public class SessionCapabilitiesMutator implements Function<Capabilities, Capabi
         toReturn.put("extensions", stereotypeExtensions);
       }
 
-      if (name.equals("binary") && !stereotypeOptions.containsKey("binary")) {
+      if ("binary".equals(name) && !stereotypeOptions.containsKey("binary")) {
         toReturn.put(name, value);
       }
 
-      if (!name.equals("binary") && !name.equals("extensions") && !name.equals("args")) {
+      if (!"binary".equals(name) && !"extensions".equals(name) && !"args".equals(name)) {
         toReturn.put(name, value);
       }
     }
@@ -176,7 +176,7 @@ public class SessionCapabilitiesMutator implements Function<Capabilities, Capabi
     for (Map.Entry<String, Object> entry : capsOptions.entrySet()) {
       String name = entry.getKey();
       Object value = entry.getValue();
-      if (name.equals("args")) {
+      if ("args".equals(name)) {
         @SuppressWarnings("unchecked")
         List<String> arguments = new ArrayList<>((List<String>) value);
 
@@ -194,7 +194,7 @@ public class SessionCapabilitiesMutator implements Function<Capabilities, Capabi
         toReturn.put("args", stereotypeArguments);
       }
 
-      if (name.equals("prefs")) {
+      if ("prefs".equals(name)) {
         @SuppressWarnings("unchecked")
         Map<String, Object> prefs = new HashMap<>((Map<String, Object>) value);
 
@@ -207,18 +207,18 @@ public class SessionCapabilitiesMutator implements Function<Capabilities, Capabi
         toReturn.put("prefs", stereotypePrefs);
       }
 
-      if (name.equals("profile")) {
+      if ("profile".equals(name)) {
         String rawProfile = (String) value;
         toReturn.put("profile", rawProfile);
       }
 
-      if (name.equals("log")) {
+      if ("log".equals(name)) {
         @SuppressWarnings("unchecked")
         Map<String, Object> logLevelMap = (Map<String, Object>) value;
         toReturn.put("log", logLevelMap);
       }
 
-      if (name.equals("binary") && !stereotypeOptions.containsKey("binary")) {
+      if ("binary".equals(name) && !stereotypeOptions.containsKey("binary")) {
         toReturn.put(name, value);
       }
 

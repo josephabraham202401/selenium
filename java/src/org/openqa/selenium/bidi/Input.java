@@ -44,7 +44,7 @@ public class Input {
         encodedAction -> {
           String type = (String) encodedAction.get("type");
           // Element as origin is only possible for input pointer or wheel
-          if (type.equals("pointer") || type.equals("wheel")) {
+          if ("pointer".equals(type) || "wheel".equals(type)) {
             List<Map<String, Object>> actionList =
                 (List<Map<String, Object>>) encodedAction.get("actions");
 
