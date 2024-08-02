@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.remote;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.Collections.singleton;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.logging.Level.SEVERE;
@@ -173,7 +175,7 @@ public class RemoteWebDriver
 
   private static URL getDefaultServerURL() {
     try {
-      return new URL(System.getProperty("webdriver.remote.server", "http://localhost:4444/"));
+      return Urls.create(System.getProperty("webdriver.remote.server", "http://localhost:4444/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     } catch (MalformedURLException e) {
       throw new WebDriverException(e);
     }
