@@ -133,7 +133,7 @@ public abstract class AppServerTestBase {
   @Test
   void uploadsFile() throws Throwable {
     String FILE_CONTENTS = "Uploaded file";
-    File testFile = File.createTempFile("webdriver", "tmp");
+    File testFile = Files.createTempFile("webdriver", "tmp").toFile();
     testFile.deleteOnExit();
     Files.write(testFile.toPath(), FILE_CONTENTS.getBytes(UTF_8));
 
