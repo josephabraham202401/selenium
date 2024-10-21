@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.firefox;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.openqa.selenium.json.Json.MAP_TYPE;
 
 import java.io.BufferedReader;
@@ -138,13 +139,13 @@ class Preferences {
 
   private void readPreferences(Reader reader) throws IOException {
     BufferedReader allLines = new BufferedReader(reader);
-    String line = allLines.readLine();
+    String line = BoundedLineReader.readLine(allLines, 5_000_000);
     while (line != null) {
       Matcher matcher = PREFERENCE_PATTERN.matcher(line);
       if (matcher.matches()) {
         allPrefs.put(matcher.group(1), preferenceAsValue(matcher.group(2)));
       }
-      line = allLines.readLine();
+      line = BoundedLineReader.readLine(allLines, 5_000_000);
     }
   }
 
