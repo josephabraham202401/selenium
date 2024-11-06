@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.grid.router;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.openqa.selenium.json.Json.MAP_TYPE;
 import static org.openqa.selenium.remote.http.HttpMethod.GET;
 
@@ -167,7 +169,7 @@ class ReverseProxyEndToEndTest {
 
   private static URL url(Server<?> server) {
     try {
-      return new URL(server.getUrl().toString() + SUB_PATH);
+      return Urls.create(server.getUrl().toString() + SUB_PATH, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
@@ -175,7 +177,7 @@ class ReverseProxyEndToEndTest {
 
   private static String gridUi(Server<?> server) {
     try {
-      return new URL(server.getUrl().toString() + SUB_PATH + "/ui").toString();
+      return Urls.create(server.getUrl().toString() + SUB_PATH + "/ui", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString();
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }

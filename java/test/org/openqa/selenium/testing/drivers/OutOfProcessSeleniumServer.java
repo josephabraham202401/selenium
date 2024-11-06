@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.testing.drivers;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.io.File;
@@ -127,7 +129,7 @@ class OutOfProcessSeleniumServer {
     process = builder.start();
 
     try {
-      URL url = new URL(baseUrl + "/status");
+      URL url = Urls.create(baseUrl + "/status", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
       LOG.info("Waiting for server status on URL " + url);
       new UrlChecker().waitUntilAvailable(10, SECONDS, url);
       LOG.info("Server is ready");
@@ -187,7 +189,7 @@ class OutOfProcessSeleniumServer {
 
   public URL getWebDriverUrl() {
     try {
-      return new URL(baseUrl);
+      return Urls.create(baseUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
