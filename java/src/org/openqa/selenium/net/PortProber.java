@@ -24,6 +24,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Platform;
@@ -32,7 +33,7 @@ public class PortProber {
 
   public static final int HIGHEST_PORT = 65535;
   public static final int START_OF_USER_PORTS = 1024;
-  private static final Random random = new Random();
+  private static final Random random = new SecureRandom();
   private static final EphemeralPortRangeDetector ephemeralRangeDetector;
   private static final Platform current = Platform.getCurrent();
 

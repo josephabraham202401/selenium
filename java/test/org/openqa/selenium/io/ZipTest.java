@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.io;
 
+import java.security.SecureRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -125,7 +126,7 @@ class ZipTest {
       assertThat(parent.mkdirs()).isTrue();
     }
     byte[] byteArray = new byte[16384];
-    new Random().nextBytes(byteArray);
+    new SecureRandom().nextBytes(byteArray);
     try (OutputStream out = new FileOutputStream(file)) {
       out.write(byteArray);
     }

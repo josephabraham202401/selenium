@@ -18,6 +18,7 @@
 package org.openqa.selenium.grid.distributor.selector;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
+import java.security.SecureRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.grid.data.Availability.UP;
 
@@ -61,7 +62,7 @@ import org.openqa.selenium.remote.tracing.Tracer;
 
 class DefaultSlotSelectorTest {
 
-  private final Random random = new Random();
+  private final Random random = new SecureRandom();
   private final DefaultSlotSelector selector = new DefaultSlotSelector();
   private Tracer tracer;
   private EventBus bus;

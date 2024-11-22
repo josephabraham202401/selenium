@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.io;
 
+import java.security.SecureRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -50,7 +51,7 @@ class FileHandlerTest {
 
   private File writeTestFile(File file) throws IOException {
     byte[] byteArray = new byte[16384];
-    new Random().nextBytes(byteArray);
+    new SecureRandom().nextBytes(byteArray);
     OutputStream out = new FileOutputStream(file);
     out.write(byteArray);
     out.close();

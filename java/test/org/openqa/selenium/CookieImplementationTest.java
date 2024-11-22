@@ -17,6 +17,7 @@
 
 package org.openqa.selenium;
 
+import java.security.SecureRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.openqa.selenium.testing.drivers.Browser.ALL;
@@ -42,7 +43,7 @@ class CookieImplementationTest extends JupiterTestBase {
 
   private DomainHelper domainHelper;
   private String cookiePage;
-  private static final Random random = new Random();
+  private static final Random random = new SecureRandom();
 
   @BeforeEach
   public void setUp() {

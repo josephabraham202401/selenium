@@ -17,6 +17,7 @@
 
 package org.openqa.selenium;
 
+import java.security.SecureRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.openqa.selenium.support.ui.ExpectedConditions.frameToBeAvailableAndSwitchToIt;
@@ -493,7 +494,7 @@ class FrameSwitchingTest extends JupiterTestBase {
         WebElement input = wait.until(presenceOfElementLocated(By.id("inputText")));
         WebElement submit = wait.until(presenceOfElementLocated(By.id("submitButton")));
         input.clear();
-        random = new Random();
+        random = new SecureRandom();
         input.sendKeys("rand" + random.nextInt());
         submit.click();
       } finally {
