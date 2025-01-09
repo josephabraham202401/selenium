@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.io;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -32,8 +33,8 @@ class FileHandlerTest {
 
   @Test
   void testFileCopy() throws IOException {
-    File newFile = File.createTempFile("testFileCopy", "dst");
-    File tmpFile = writeTestFile(File.createTempFile("FileUtilTest", "src"));
+    File newFile = Files.createTempFile("testFileCopy", "dst").toFile();
+    File tmpFile = writeTestFile(Files.createTempFile("FileUtilTest", "src").toFile());
     assertThat(newFile.length()).isZero();
     assertThat(tmpFile.length()).isPositive();
 

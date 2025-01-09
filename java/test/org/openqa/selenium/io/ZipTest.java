@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.io;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -89,7 +90,7 @@ class ZipTest {
 
   @Test
   void testCanUnzip() throws IOException {
-    File testZip = File.createTempFile("testUnzip", "zip");
+    File testZip = Files.createTempFile("testUnzip", "zip").toFile();
     writeTestZip(testZip, 25);
     File out = Zip.unzipToTempDir(new FileInputStream(testZip), "unzip", "stream");
     assertThat(out.list()).hasSize(25);
@@ -106,7 +107,7 @@ class ZipTest {
   }
 
   private void writeTestZipEntry(ZipOutputStream out) throws IOException {
-    File testFile = File.createTempFile("testZip", "file");
+    File testFile = Files.createTempFile("testZip", "file").toFile();
     writeTestFile(testFile);
     ZipEntry entry = new ZipEntry(testFile.getName());
     out.putNextEntry(entry);

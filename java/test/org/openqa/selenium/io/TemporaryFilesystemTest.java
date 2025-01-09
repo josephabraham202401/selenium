@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.io;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -96,7 +97,7 @@ class TemporaryFilesystemTest {
 
   @Test
   void testDoesNotDeleteArbitraryFiles() throws IOException {
-    File tempFile = File.createTempFile("TemporaryFilesystem", "dndaf");
+    File tempFile = Files.createTempFile("TemporaryFilesystem", "dndaf").toFile();
     assertThat(tempFile).exists();
     try {
       tmpFs.deleteTempDir(tempFile);
@@ -119,7 +120,7 @@ class TemporaryFilesystemTest {
   void testShouldBeAbleToModifyDefaultInstance() throws IOException {
     // Create a temp file *outside* of the directory owned by the current
     // TemporaryFilesystem instance.
-    File otherTempDir = File.createTempFile("TemporaryFilesystem", "NewDir");
+    File otherTempDir = Files.createTempFile("TemporaryFilesystem", "NewDir").toFile();
     otherTempDir.delete();
     String otherTempDirPath = otherTempDir.getAbsolutePath();
 
@@ -146,9 +147,9 @@ class TemporaryFilesystemTest {
 
   private void createDummyFilesystemContent(File dir) throws IOException {
     assertThat(dir.isDirectory()).isTrue();
-    File.createTempFile("cleanup", "file", dir);
+    Files.createTempFile(dir.toPath(), "cleanup", "file").toFile();
     File childDir = new File(dir, "child");
     childDir.mkdir();
-    File.createTempFile("cleanup", "childFile", childDir);
+    Files.createTempFile(childDir.toPath(), "cleanup", "childFile").toFile();
   }
 }

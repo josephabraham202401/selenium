@@ -17,6 +17,7 @@
 
 package org.openqa.selenium;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.openqa.selenium.support.ui.ExpectedConditions.alertIsPresent;
@@ -148,7 +149,7 @@ class FormHandlingTest extends JupiterTestBase {
     WebElement uploadElement = driver.findElement(By.id("upload"));
     assertThat(uploadElement.getAttribute("value")).isEmpty();
 
-    File file = File.createTempFile("test", "txt");
+    File file = Files.createTempFile("test", "txt").toFile();
     file.deleteOnExit();
 
     uploadElement.sendKeys(file.getAbsolutePath());
@@ -163,7 +164,7 @@ class FormHandlingTest extends JupiterTestBase {
     WebElement uploadElement = driver.findElement(By.id("file"));
     assertThat(uploadElement.getAttribute("value")).isEmpty();
 
-    File file = File.createTempFile("test", "txt");
+    File file = Files.createTempFile("test", "txt").toFile();
     file.deleteOnExit();
 
     uploadElement.sendKeys(file.getAbsolutePath());
@@ -175,7 +176,7 @@ class FormHandlingTest extends JupiterTestBase {
   @Test
   @Ignore(value = SAFARI, reason = "Hanging")
   public void testShouldBeAbleToUploadTheSameFileTwice() throws IOException {
-    File file = File.createTempFile("test", "txt");
+    File file = Files.createTempFile("test", "txt").toFile();
     file.deleteOnExit();
 
     driver.get(pages.formPage);

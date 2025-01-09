@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.firefox;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 import static org.openqa.selenium.testing.drivers.Browser.FIREFOX;
@@ -108,7 +109,7 @@ class FirefoxDriverPreferenceTest extends JupiterTestBase {
   @NoDriverBeforeTest
   public void shouldBeAbleToStartFromProfileWithLogFileSet() throws IOException {
     FirefoxProfile profile = new FirefoxProfile();
-    File logFile = File.createTempFile("test", "firefox.log");
+    File logFile = Files.createTempFile("test", "firefox.log").toFile();
     logFile.deleteOnExit();
 
     profile.setPreference("webdriver.log.file", logFile.getAbsolutePath());
