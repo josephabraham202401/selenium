@@ -17,6 +17,7 @@
 
 package org.openqa.selenium;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -191,7 +192,7 @@ class RequireTest {
     assertThatExceptionOfType(IllegalArgumentException.class)
         .isThrownBy(() -> Require.argument("Target", (File) null).isFile())
         .withMessage("Target must be set");
-    File tempFile = File.createTempFile("example", "tmp");
+    File tempFile = Files.createTempFile("example", "tmp").toFile();
     tempFile.deleteOnExit();
     assertThat(Require.argument("Target", tempFile).isFile()).isSameAs(tempFile);
     File dir = tempFile.getParentFile();
@@ -211,7 +212,7 @@ class RequireTest {
     assertThatExceptionOfType(IllegalArgumentException.class)
         .isThrownBy(() -> Require.argument("Target", (File) null).isDirectory())
         .withMessage("Target must be set");
-    File tempFile = File.createTempFile("example", "tmp");
+    File tempFile = Files.createTempFile("example", "tmp").toFile();
     tempFile.deleteOnExit();
     assertThatExceptionOfType(IllegalArgumentException.class)
         .isThrownBy(() -> Require.argument("Target", tempFile).isDirectory())
@@ -266,7 +267,7 @@ class RequireTest {
     assertThatExceptionOfType(IllegalStateException.class)
         .isThrownBy(() -> Require.state("Target", (File) null).isFile())
         .withMessage("Target must be set");
-    File tempFile = File.createTempFile("example", "tmp");
+    File tempFile = Files.createTempFile("example", "tmp").toFile();
     tempFile.deleteOnExit();
     assertThat(Require.state("Target", tempFile).isFile()).isSameAs(tempFile);
     File dir = tempFile.getParentFile();
@@ -286,7 +287,7 @@ class RequireTest {
     assertThatExceptionOfType(IllegalStateException.class)
         .isThrownBy(() -> Require.state("Target", (File) null).isDirectory())
         .withMessage("Target must be set");
-    File tempFile = File.createTempFile("example", "tmp");
+    File tempFile = Files.createTempFile("example", "tmp").toFile();
     tempFile.deleteOnExit();
     assertThatExceptionOfType(IllegalStateException.class)
         .isThrownBy(() -> Require.state("Target", tempFile).isDirectory())
@@ -306,7 +307,7 @@ class RequireTest {
     assertThatExceptionOfType(IllegalStateException.class)
         .isThrownBy(() -> Require.state("Target", (Path) null).isFile())
         .withMessage("Target must be set");
-    File tempFile = File.createTempFile("example", "tmp");
+    File tempFile = Files.createTempFile("example", "tmp").toFile();
     tempFile.deleteOnExit();
     Path tempFilePath = Paths.get(tempFile.toURI());
     assertThat(Require.state("Target", tempFilePath).isFile()).isSameAs(tempFilePath);
@@ -327,7 +328,7 @@ class RequireTest {
     assertThatExceptionOfType(IllegalStateException.class)
         .isThrownBy(() -> Require.state("Target", (Path) null).isDirectory())
         .withMessage("Target must be set");
-    File tempFile = File.createTempFile("example", "tmp");
+    File tempFile = Files.createTempFile("example", "tmp").toFile();
     Path tempFilePath = Paths.get(tempFile.toURI());
     tempFile.deleteOnExit();
     assertThatExceptionOfType(IllegalStateException.class)

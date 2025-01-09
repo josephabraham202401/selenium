@@ -173,7 +173,7 @@ public class TestUtilities {
 
   public static File createTmpFile(String content) {
     try {
-      File f = File.createTempFile("webdriver", "tmp");
+      File f = Files.createTempFile("webdriver", "tmp").toFile();
       f.deleteOnExit();
       Files.write(f.toPath(), content.getBytes(StandardCharsets.UTF_8));
       return f;
