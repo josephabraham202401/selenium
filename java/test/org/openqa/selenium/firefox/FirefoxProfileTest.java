@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.firefox;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.BufferedReader;
@@ -204,7 +205,7 @@ class FirefoxProfileTest {
     BufferedReader reader = new BufferedReader(new FileReader(prefs));
 
     List<String> prefLines = new ArrayList<>();
-    for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+    for (String line = BoundedLineReader.readLine(reader, 5_000_000); line != null; line = BoundedLineReader.readLine(reader, 5_000_000)) {
       prefLines.add(line);
     }
 

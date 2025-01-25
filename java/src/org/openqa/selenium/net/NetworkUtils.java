@@ -16,6 +16,7 @@
 // under the License.
 package org.openqa.selenium.net;
 
+import io.github.pixee.security.BoundedLineReader;
 import io.github.pixee.security.SystemCommand;
 import static org.openqa.selenium.net.NetworkInterface.isIpv6;
 
@@ -274,7 +275,7 @@ public class NetworkUtils {
           try (InputStreamReader isr =
                   new InputStreamReader(process.getInputStream(), Charset.defaultCharset());
               BufferedReader reader = new BufferedReader(isr)) {
-            host = reader.readLine();
+            host = BoundedLineReader.readLine(reader, 5_000_000);
           }
         }
       } catch (InterruptedException e) {
