@@ -23,6 +23,8 @@ import graphql.schema.CoercingParseLiteralException;
 import graphql.schema.CoercingParseValueException;
 import graphql.schema.CoercingSerializeException;
 import graphql.schema.GraphQLScalarType;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -122,7 +124,7 @@ class Types {
 
                 try {
                   if (input instanceof String) {
-                    return new URL((String) input);
+                    return Urls.create((String) input, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                   }
 
                   if (input instanceof URI) {
@@ -142,7 +144,7 @@ class Types {
                 }
 
                 try {
-                  return new URL(((StringValue) input).getValue());
+                  return Urls.create(((StringValue) input).getValue(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 } catch (MalformedURLException e) {
                   throw new CoercingParseLiteralException("Unable to parse: " + input);
                 }

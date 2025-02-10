@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.testing.drivers;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.openqa.selenium.remote.http.Contents.string;
 
 import java.io.IOException;
@@ -74,7 +76,7 @@ class GridSupplier implements Supplier<WebDriver> {
       hub = new OutOfProcessSeleniumServer().start("-role", "hub");
 
       URL hubUrl = hub.getWebDriverUrl();
-      hubUrl = new URL(hubUrl.getProtocol(), hubUrl.getHost(), hubUrl.getPort(), hubUrl.getFile());
+      hubUrl = Urls.create(hubUrl.getProtocol(), hubUrl.getHost(), hubUrl.getPort(), hubUrl.getFile(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
       node =
           new OutOfProcessSeleniumServer().start("-role", "node", "-hub", String.valueOf(hubUrl));

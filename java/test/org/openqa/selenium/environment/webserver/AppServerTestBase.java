@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.environment.webserver;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -120,7 +122,7 @@ public abstract class AppServerTestBase {
   void manifestHasCorrectMimeType() throws IOException {
     String url = server.whereIs("html5/test.appcache");
     HttpClient.Factory factory = HttpClient.Factory.createDefault();
-    HttpClient client = factory.createClient(new URL(url));
+    HttpClient client = factory.createClient(Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
     HttpResponse response = client.execute(new HttpRequest(HttpMethod.GET, url));
 
     System.out.printf("Content for %s was %s%n", url, string(response));
