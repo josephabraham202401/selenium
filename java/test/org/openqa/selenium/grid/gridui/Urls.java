@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.grid.gridui;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.openqa.selenium.grid.server.Server;
@@ -48,7 +50,7 @@ class Urls {
         path = path + relativePath;
       }
 
-      return new URL(base, path);
+      return Urls.create(base, path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }

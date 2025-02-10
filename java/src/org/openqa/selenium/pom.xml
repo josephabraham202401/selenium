@@ -87,6 +87,6 @@
     </dependencies>
   </dependencyManagement>
   <properties>
-    <versions.java-security-toolkit>1.1.2</versions.java-security-toolkit>
+    <versions.java-security-toolkit>1.2.1</versions.java-security-toolkit>
   </properties>
 </project>
