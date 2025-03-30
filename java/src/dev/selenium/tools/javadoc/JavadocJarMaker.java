@@ -17,6 +17,7 @@
 
 package dev.selenium.tools.javadoc;
 
+import io.github.pixee.security.ZipSecurity;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.github.bazelbuild.rules_jvm_external.zip.StableZipEntry;
@@ -201,7 +202,7 @@ public class JavadocJarMaker {
         continue;
       }
 
-      try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(jar))) {
+      try (ZipInputStream zis = ZipSecurity.createHardenedInputStream(Files.newInputStream(jar))) {
         for (ZipEntry entry = zis.getNextEntry(); entry != null; entry = zis.getNextEntry()) {
           String name = entry.getName();
           if (!name.endsWith(".java")) {
