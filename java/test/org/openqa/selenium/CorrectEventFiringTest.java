@@ -17,6 +17,7 @@
 
 package org.openqa.selenium;
 
+import java.nio.file.Files;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -471,7 +472,7 @@ class CorrectEventFiringTest extends JupiterTestBase {
     WebElement result = driver.findElement(By.id("fileResults"));
     assertThat(result.getText()).isEmpty();
 
-    File file = File.createTempFile("test", "txt");
+    File file = Files.createTempFile("test", "txt").toFile();
     file.deleteOnExit();
 
     uploadElement.sendKeys(file.getAbsolutePath());
