@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.javascript;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
@@ -85,7 +87,7 @@ class JavaScriptTestSuite {
             if (isBazel() && !url.startsWith("/common/generated/")) {
               url = "/filez/selenium" + url;
             }
-            return new URL(appServer.whereIs(url));
+            return Urls.create(appServer.whereIs(url), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
           } catch (MalformedURLException e) {
             throw new RuntimeException(e);
           }

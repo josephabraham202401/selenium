@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.json;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -48,7 +50,7 @@ class UrlCoercer extends TypeCoercer<URL> {
       }
 
       try {
-        return new URL(toCoerce);
+        return Urls.create(toCoerce, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
       } catch (MalformedURLException e) {
         throw new JsonException(e);
       }

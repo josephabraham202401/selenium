@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.federatedcredentialmanagement;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.MAP;
@@ -72,7 +74,7 @@ class FederatedCredentialManagementTest extends JupiterTestBase {
   private int getSecurePort() {
     String urlString = appServer.whereIsSecure("/");
     try {
-      return new URL(urlString).getPort();
+      return Urls.create(urlString, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getPort();
     } catch (MalformedURLException ex) {
       // This should not happen.
       return 0;

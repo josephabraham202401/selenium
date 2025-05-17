@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.testing;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 import java.net.MalformedURLException;
@@ -83,8 +85,8 @@ public abstract class JupiterTestBase {
 
   public String toLocalUrl(String url) {
     try {
-      URL original = new URL(url);
-      return new URL(original.getProtocol(), "localhost", original.getPort(), original.getFile())
+      URL original = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
+      return Urls.create(original.getProtocol(), "localhost", original.getPort(), original.getFile(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS)
           .toString();
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);

@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.devtools;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.openqa.selenium.remote.http.Contents.utf8String;
@@ -112,7 +114,7 @@ class NetworkInterceptorRestTest extends JupiterTestBase {
                 + "  }"
                 + "};"
                 + "xhr.send('Hey');",
-            new URL(appServer.whereIs("/")).toString());
+            Urls.create(appServer.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString());
 
     assertThat(seen.get()).isTrue();
     assertThat(response.toString()).contains("Received response for PATCH");
@@ -149,7 +151,7 @@ class NetworkInterceptorRestTest extends JupiterTestBase {
                 + "  }"
                 + "};"
                 + "xhr.send('Hey');",
-            new URL(appServer.whereIs("/")).toString());
+            Urls.create(appServer.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString());
 
     assertThat(seen.get()).isTrue();
     assertThat(response.toString()).contains("Received response for PUT");
@@ -186,7 +188,7 @@ class NetworkInterceptorRestTest extends JupiterTestBase {
                 + "  }"
                 + "};"
                 + "xhr.send('Hey');",
-            new URL(appServer.whereIs("/")).toString());
+            Urls.create(appServer.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString());
 
     assertThat(seen.get()).isTrue();
     assertThat(response.toString()).contains("Received response for POST");
@@ -223,7 +225,7 @@ class NetworkInterceptorRestTest extends JupiterTestBase {
                 + "  }"
                 + "};"
                 + "xhr.send('Hey');",
-            new URL(appServer.whereIs("/")).toString());
+            Urls.create(appServer.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString());
 
     assertThat(seen.get()).isTrue();
     assertThat(response.toString()).contains("Received response for DELETE");
@@ -260,7 +262,7 @@ class NetworkInterceptorRestTest extends JupiterTestBase {
                 + "  }"
                 + "};"
                 + "xhr.send();",
-            new URL(appServer.whereIs("/")).toString());
+            Urls.create(appServer.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString());
 
     assertThat(seen.get()).isTrue();
     assertThat(response.toString()).contains("Received response for GET");

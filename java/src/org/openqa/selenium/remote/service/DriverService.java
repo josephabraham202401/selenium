@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.remote.service;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.Collections.emptyMap;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.openqa.selenium.concurrent.ExecutorServices.shutdownGracefully;
@@ -137,7 +139,7 @@ public class DriverService implements Closeable {
   }
 
   protected URL getUrl(int port) throws IOException {
-    return new URL(String.format("http://localhost:%d", port));
+    return Urls.create(String.format("http://localhost:%d", port), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
   }
 
   protected Capabilities getDefaultDriverOptions() {
@@ -270,7 +272,7 @@ public class DriverService implements Closeable {
 
   protected void waitUntilAvailable() {
     try {
-      URL status = new URL(url.toString() + "/status");
+      URL status = Urls.create(url.toString() + "/status", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
       new UrlChecker().waitUntilAvailable(getTimeout().toMillis(), TimeUnit.MILLISECONDS, status);
     } catch (MalformedURLException e) {
       throw new WebDriverException("Driver server status URL is malformed.", e);
@@ -296,7 +298,7 @@ public class DriverService implements Closeable {
 
       if (hasShutdownEndpoint()) {
         try {
-          URL killUrl = new URL(url.toString() + "/shutdown");
+          URL killUrl = Urls.create(url.toString() + "/shutdown", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
           new UrlChecker().waitUntilUnavailable(3, SECONDS, killUrl);
           try {
             process.waitFor(Duration.ofSeconds(10));

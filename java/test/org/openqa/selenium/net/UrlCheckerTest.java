@@ -16,6 +16,8 @@
 // under the License.
 package org.openqa.selenium.net;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.lang.System.currentTimeMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.remote.http.Contents.utf8String;
@@ -49,11 +51,11 @@ class UrlCheckerTest {
           server.start();
           return null;
         });
-    urlChecker.waitUntilAvailable(10, TimeUnit.SECONDS, new URL(server.whereIs("/")));
+    urlChecker.waitUntilAvailable(10, TimeUnit.SECONDS, Urls.create(server.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
     server.stop();
 
     this.server = createServer();
-    this.url = new URL(this.server.whereIs("/"));
+    this.url = Urls.create(this.server.whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
   }
 
   private NettyAppServer createServer() {

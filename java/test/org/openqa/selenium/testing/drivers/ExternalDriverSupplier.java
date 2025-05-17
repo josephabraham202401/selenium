@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.testing.drivers;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.lang.reflect.Constructor;
@@ -80,7 +82,7 @@ class ExternalDriverSupplier implements Supplier<WebDriver> {
       LOG.info("Using external WebDriver server: " + externalUrl);
       URL url;
       try {
-        url = new URL(externalUrl);
+        url = Urls.create(externalUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
       } catch (MalformedURLException e) {
         throw new RuntimeException("Invalid server URL: " + externalUrl, e);
       }
@@ -145,7 +147,7 @@ class ExternalDriverSupplier implements Supplier<WebDriver> {
     public WebDriver get() {
       try {
         LOG.info("Waiting for server to be ready at " + serverUrl);
-        new UrlChecker().waitUntilAvailable(60, SECONDS, new URL(serverUrl + "/status"));
+        new UrlChecker().waitUntilAvailable(60, SECONDS, Urls.create(serverUrl + "/status", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS));
         LOG.info("Server is ready");
       } catch (UrlChecker.TimeoutException e) {
         throw new RuntimeException("The external server is not accepting commands", e);

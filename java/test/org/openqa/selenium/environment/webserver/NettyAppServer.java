@@ -18,6 +18,8 @@
 package org.openqa.selenium.environment.webserver;
 
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.Collections.singletonMap;
 import static org.openqa.selenium.json.Json.JSON_UTF_8;
 import static org.openqa.selenium.remote.http.Contents.string;
@@ -191,7 +193,7 @@ public class NettyAppServer implements AppServer {
     }
 
     try {
-      return new URL(protocol, hostName, server.getUrl().getPort(), relativeUrl).toString();
+      return Urls.create(protocol, hostName, server.getUrl().getPort(), relativeUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString();
     } catch (MalformedURLException e) {
       throw new UncheckedIOException(e);
     }
@@ -200,7 +202,7 @@ public class NettyAppServer implements AppServer {
   @Override
   public String create(Page page) {
     try (HttpClient client =
-        HttpClient.Factory.createDefault().createClient(new URL(whereIs("/")))) {
+        HttpClient.Factory.createDefault().createClient(Urls.create(whereIs("/"), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS))) {
       HttpRequest request = new HttpRequest(HttpMethod.POST, "/common/createPage");
       request.setHeader(CONTENT_TYPE, JSON_UTF_8);
       request.setContent(Contents.asJson(ImmutableMap.of("content", page.toString())));

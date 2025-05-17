@@ -17,6 +17,8 @@
 
 package org.openqa.selenium.grid.node.docker;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.util.Optional.ofNullable;
 import static org.openqa.selenium.docker.ContainerConfig.image;
 import static org.openqa.selenium.remote.Dialect.W3C;
@@ -330,7 +332,7 @@ public class DockerSessionFactory implements SessionFactory {
     videoContainer.start();
     String videoContainerIp = runningInDocker ? videoContainer.inspect().getIp() : "localhost";
     try {
-      URL videoContainerUrl = new URL(String.format("http://%s:%s", videoContainerIp, videoPort));
+      URL videoContainerUrl = Urls.create(String.format("http://%s:%s", videoContainerIp, videoPort), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
       HttpClient videoClient = clientFactory.createClient(videoContainerUrl);
       LOG.fine(String.format("Waiting for video recording... (id: %s)", videoContainer.getId()));
       waitForServerToStart(videoClient, Duration.ofMinutes(1));
@@ -443,7 +445,7 @@ public class DockerSessionFactory implements SessionFactory {
           host = dockerUri.getHost();
         }
       }
-      return new URL(String.format("http://%s:%s/wd/hub", host, port));
+      return Urls.create(String.format("http://%s:%s/wd/hub", host, port), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     } catch (MalformedURLException e) {
       throw new SessionNotCreatedException(e.getMessage(), e);
     }

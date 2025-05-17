@@ -31,6 +31,8 @@ import static com.google.common.net.MediaType.SVG_UTF_8;
 import static com.google.common.net.MediaType.WOFF;
 import static com.google.common.net.MediaType.XHTML_UTF_8;
 import static com.google.common.net.MediaType.XML_UTF_8;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import static java.net.HttpURLConnection.HTTP_MOVED_TEMP;
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -70,7 +72,7 @@ public class ResourceHandler implements Routable {
     if (!result.isPresent()) {
       String errorMessage;
       try {
-        new URL(req.getUri());
+        Urls.create(req.getUri(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         errorMessage = "Unable to find " + req.getUri();
       } catch (MalformedURLException ignore) {
         errorMessage = "Unable to find resource, invalid path in url.";
