@@ -18,6 +18,7 @@
 package org.openqa.selenium.json;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import java.security.SecureRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.openqa.selenium.json.Json.MAP_TYPE;
@@ -247,7 +248,7 @@ class JsonInputTest {
   @Test
   void shouldBeAbleToReadDataLongerThanReadBuffer() {
     char[] chars = new char[] {'c', 'h', 'e', 's'};
-    Random r = new Random();
+    Random r = new SecureRandom();
     String raw =
         Stream.generate(() -> "" + chars[r.nextInt(4)]).limit(150).collect(Collectors.joining());
     JsonInput input = newInput("\"" + raw + "\"");
@@ -258,7 +259,7 @@ class JsonInputTest {
   @Test
   void shouldBeAbleToReadNonWellFormedDataLongerThanReadBuffer() {
     char[] chars = new char[] {'c', 'h', 'e', 's'};
-    Random r = new Random();
+    Random r = new SecureRandom();
     String raw =
         Stream.generate(() -> "" + chars[r.nextInt(4)]).limit(150).collect(Collectors.joining());
     JsonInput input = newInput("\"" + raw);
