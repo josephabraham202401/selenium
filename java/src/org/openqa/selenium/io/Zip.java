@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.io;
 
+import io.github.pixee.security.ZipSecurity;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -97,7 +98,7 @@ public class Zip {
   }
 
   public static void unzip(InputStream source, File outputDir) throws IOException {
-    try (ZipInputStream zis = new ZipInputStream(source)) {
+    try (ZipInputStream zis = ZipSecurity.createHardenedInputStream(source)) {
       ZipEntry entry;
       while ((entry = zis.getNextEntry()) != null) {
         File file = new File(outputDir, entry.getName());
