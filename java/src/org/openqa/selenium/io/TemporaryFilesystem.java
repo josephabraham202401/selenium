@@ -20,6 +20,7 @@ package org.openqa.selenium.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
@@ -88,7 +89,7 @@ public class TemporaryFilesystem {
   public File createTempDir(String prefix, String suffix) {
     try {
       // Create a tempfile, and delete it.
-      File file = File.createTempFile(prefix, suffix, baseDir);
+      File file = Files.createTempFile(baseDir.toPath(), prefix, suffix).toFile();
 
       if (!file.delete()) {
         throw new IOException("Unable to create temp file");
