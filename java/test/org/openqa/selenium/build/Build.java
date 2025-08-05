@@ -16,6 +16,7 @@
 // under the License.
 package org.openqa.selenium.build;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.openqa.selenium.Platform.WINDOWS;
 import static org.openqa.selenium.build.DevMode.isInDevMode;
@@ -101,9 +102,9 @@ public class Build {
           new BufferedReader(
               new InputStreamReader(buildProcess.getInputStream(), Charset.defaultCharset()),
               8192)) {
-        for (String s = buildOutput.readLine();
+        for (String s = BoundedLineReader.readLine(buildOutput, 5_000_000);
             s != null && !interrupted();
-            s = buildOutput.readLine()) {
+            s = BoundedLineReader.readLine(buildOutput, 5_000_000)) {
           try {
             System.out.println(">>> " + s);
           } catch (Throwable ignored) {

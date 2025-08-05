@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.net;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class LinuxEphemeralPortRangeDetector implements EphemeralPortRangeDetect
     int lowPort = defaultRange.getLowestEphemeralPort();
     int highPort = defaultRange.getHighestEphemeralPort();
     try (BufferedReader in = new BufferedReader(inputFil)) {
-      String[] split = in.readLine().split("\\s+", 3);
+      String[] split = BoundedLineReader.readLine(in, 5_000_000).split("\\s+", 3);
       lowPort = Integer.parseInt(split[0]);
       highPort = Integer.parseInt(split[1]);
     } catch (IOException | NullPointerException ignore) {

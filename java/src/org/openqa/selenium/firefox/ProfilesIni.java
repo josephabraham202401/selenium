@@ -17,6 +17,7 @@
 
 package org.openqa.selenium.firefox;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.openqa.selenium.Platform.MAC;
 import static org.openqa.selenium.Platform.WINDOWS;
 
@@ -58,7 +59,7 @@ public class ProfilesIni {
     try {
       reader = Files.newBufferedReader(profilesIni.toPath(), Charset.defaultCharset());
 
-      String line = reader.readLine();
+      String line = BoundedLineReader.readLine(reader, 5_000_000);
 
       while (line != null) {
         if (line.startsWith("[Profile")) {
@@ -75,7 +76,7 @@ public class ProfilesIni {
           path = line.substring("Path=".length());
         }
 
-        line = reader.readLine();
+        line = BoundedLineReader.readLine(reader, 5_000_000);
       }
     } catch (IOException e) {
       throw new WebDriverException(e);
